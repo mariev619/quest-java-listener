@@ -3,12 +3,14 @@ import java.util.TimerTask;
 
 public class Transactions {
 
-    public static void withdraw(Bank account, int value) {
+    public static void withdraw(int value, TransactionListener event) {
         int time = (int) (Math.random() * ((1000 - 500) + 1)) + 500;
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
+                Bank account = new Bank(1000);
                 account.setTotal(account.getTotal() - value);
+                event.onComplete(account);
             }
         }, time);
     }
